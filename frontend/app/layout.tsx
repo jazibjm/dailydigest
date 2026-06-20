@@ -16,7 +16,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <main>{children}</main>
+        <main>
+          {children}
+          <footer className="site-footer">
+            <a href="/">Home</a>
+            <span aria-hidden="true">·</span>
+            <a href="/about">How it works</a>
+          </footer>
+        </main>
         <Analytics />
         <SpeedInsights />
       </body>
