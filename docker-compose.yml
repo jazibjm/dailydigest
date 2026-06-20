@@ -1,0 +1,24 @@
+# Local Postgres for development. Not for production -- on the VPS you'd run
+# Postgres directly or use a managed provider like Neon.
+#
+#   docker compose up -d        # start
+#   docker compose down         # stop (keeps data)
+#   docker compose down -v      # stop and wipe data
+#
+# Matches the default DATABASE_URL in backend/.env.example.
+
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: techdigest
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

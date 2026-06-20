@@ -1,0 +1,18 @@
+# Core
+sqlalchemy>=2.0
+psycopg[binary]>=3.1
+
+# Sources & extraction
+requests>=2.31
+feedparser>=6.0
+trafilatura>=1.8
+
+# Summarization
+openai>=1.30
+
+# API
+fastapi>=0.110
+uvicorn[standard]>=0.29
+
+# Config
+python-dotenv>=1.0
