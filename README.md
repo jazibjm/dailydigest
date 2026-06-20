@@ -4,6 +4,8 @@ An automated daily tech-news digest. A Python pipeline pulls top stories from
 Hacker News and RSS feeds, extracts article text, summarizes everything grouped
 by topic with the OpenAI API, stores it in Postgres, and posts it to Discord. A
 FastAPI service exposes the digests as JSON, and a Next.js frontend renders them.
+<img width="1843" height="1290" alt="image" src="https://github.com/user-attachments/assets/0d058083-ad68-48dc-b847-98eb1761956f" />
+<img width="1942" height="1289" alt="image" src="https://github.com/user-attachments/assets/0a01c035-110f-45ff-b98f-d885f5fc459e" />
 
 ```
 backend/   Python pipeline + FastAPI  (runs on a VPS)
