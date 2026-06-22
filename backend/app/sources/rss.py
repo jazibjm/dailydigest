@@ -5,12 +5,23 @@ Adding a feed is a one-line change -- append a URL to RSS_FEEDS (env var or the
 default list in config.py). No code change needed here.
 """
 
+import calendar
+from datetime import datetime, timezone
 from urllib.parse import urlparse
 
 import feedparser
 
 from ..config import NUM_STORIES, RSS_FEEDS
 from .base import StoryItem, register
+
+
+def _entry_published(entry) -> datetime | None:
+    """Pull a UTC publish time from an RSS entry, if it has one."""
+    parsed = entry.get("published_parsed") or entry.get("updated_parsed")
+    if not parsed:
+        return None
+    # feedparser normalizes these to UTC; timegm treats the struct as UTC.
+    return datetime.fromtimestamp(calendar.timegm(parsed), tz=timezone.utc)
 
 
 def _feed_label(feed_url: str) -> str:
@@ -33,5 +44,12 @@ def fetch_rss() -> list[StoryItem]:
             if not link or not title:
                 continue
             # RSS has no popularity score; leave it at 0.
-            stories.append(StoryItem(title=title, url=link, source=label))
+            stories.append(
+                StoryItem(
+                    title=title,
+                    url=link,
+                    source=label,
+                    published=_entry_published(entry),
+                )
+            )
     return stories

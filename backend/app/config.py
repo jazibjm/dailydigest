@@ -32,6 +32,8 @@ OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "gpt-4.1-mini")
 # ---- Pipeline tuning ----
 NUM_STORIES = int(os.environ.get("NUM_STORIES", "15"))   # stories per source
 MAX_CHARS = int(os.environ.get("MAX_CHARS", "2000"))     # extracted text cap
+# Only include stories published within this many hours. 0 disables the filter.
+MAX_AGE_HOURS = int(os.environ.get("MAX_AGE_HOURS", "24"))
 
 # ---- RSS feeds ----
 # Comma-separated list of feed URLs. Adding a feed = add a URL here.

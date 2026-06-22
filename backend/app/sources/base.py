@@ -6,6 +6,7 @@ hand back before anything is summarized or saved.
 """
 
 from dataclasses import dataclass
+from datetime import datetime
 from typing import Callable
 
 _SOURCES: list[Callable[[], list["StoryItem"]]] = []
@@ -17,6 +18,8 @@ class StoryItem:
     url: str
     source: str       # e.g. "hackernews", "rss:arstechnica"
     score: int = 0    # popularity signal where available, else 0
+    # When the story was published (UTC, timezone-aware). None if unknown.
+    published: datetime | None = None
 
 
 def register(fetcher: Callable[[], list["StoryItem"]]):

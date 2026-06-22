@@ -1,5 +1,7 @@
 """Hacker News source: top stories that link out to an article."""
 
+from datetime import datetime, timezone
+
 import requests
 
 from ..config import NUM_STORIES
@@ -27,12 +29,18 @@ def fetch_hackernews() -> list[StoryItem]:
             break
         item = _get_item(story_id)
         if item and item.get("url") and item.get("type") == "story":
+            # HN 'time' is the unix epoch (UTC) the story was posted.
+            ts = item.get("time")
+            published = (
+                datetime.fromtimestamp(ts, tz=timezone.utc) if ts else None
+            )
             stories.append(
                 StoryItem(
                     title=item["title"],
                     url=item["url"],
                     source="hackernews",
                     score=item.get("score", 0),
+                    published=published,
                 )
             )
     return stories
